@@ -19,26 +19,26 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Company Details */}
           <div className="space-y-4">
-            <div className="flex items-center">
-              <img src="/logo.png" alt="Revoc Learning Logo" className="h-10 w-10 mr-4" />
+            <Link to="/home" onClick={handleNavClick} className="flex items-center cursor-pointer">
+              <img src="/footer.png" alt="Revoc Learning Logo" className="h-10 w-10 mr-4" />
               <h3 className="font-bold text-xl">Revoc Learning</h3>
-            </div>
+            </Link>
             <p className="text-sm text-gray-300">
-              Empowering learners with high-quality educational content and an 
+              Empowering learners with high-quality educational content and an
               interactive learning experience.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Mail size={16} />
-                <span className="text-sm">contact@revoclearning.com</span>
+                <span className="text-sm">revocnepal@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={16} />
-                <span className="text-sm">+1 (555) 123-4567</span>
+                <span className="text-sm">+977 9814182323</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin size={16} />
-                <span className="text-sm">123 Education Street, Learning City</span>
+                <span className="text-sm">Kupandole, Lalitpur</span>
               </div>
             </div>
           </div>
@@ -65,9 +65,18 @@ function Footer() {
               <a href="#" className="hover:text-blue-300 transition" aria-label="Facebook">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="hover:text-blue-300 transition" aria-label="Twitter">
-                <Twitter size={20} />
+              <a href="#" className="hover:text-blue-300 transition" aria-label="X (formerly Twitter)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M17.4 3H21L14.6 10.4L22.2 21H15.6L10.8 14.6L5.3 21H2L8.8 13.2L1.8 3H8.6L12.9 8.9L17.4 3Z" />
+                </svg>
               </a>
+
               <a href="#" className="hover:text-blue-300 transition" aria-label="Instagram">
                 <Instagram size={20} />
               </a>
@@ -78,16 +87,16 @@ function Footer() {
                 <Youtube size={20} />
               </a>
             </div>
-            
+
             <div className="mt-6">
               <h4 className="font-semibold mb-2">Subscribe to Our Newsletter</h4>
               <div className="flex">
-                <input 
-                  type="email" 
-                  placeholder="Your email address" 
+                <input
+                  type="email"
+                  placeholder="Your email address"
                   className="px-3 py-2 text-sm rounded-l focus:outline-none text-black flex-grow"
                 />
-                <button 
+                <button
                   className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r text-sm font-medium transition"
                 >
                   Subscribe

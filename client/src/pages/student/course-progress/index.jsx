@@ -18,11 +18,13 @@ import {
   getCurrentCourseProgressService,
   markLectureAsViewedService,
   resetCourseProgressService,
+  submitCourseRatingService,
 } from "@/services";
-import { Check, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Play, Star } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useNavigate, useParams } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 function StudentViewCourseProgressPage() {
   const navigate = useNavigate();
@@ -36,6 +38,10 @@ function StudentViewCourseProgressPage() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   const { id } = useParams();
+  const [rating, setRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasRated, setHasRated] = useState(false);
+  const { toast } = useToast();
 
   async function fetchCurrentCourseProgress() {
     const response = await getCurrentCourseProgressService(auth?.user?._id, id);
@@ -104,6 +110,42 @@ function StudentViewCourseProgressPage() {
       fetchCurrentCourseProgress();
     }
   }
+
+  const handleRatingSubmit = async () => {
+    if (rating === 0) {
+      toast({
+        title: "Rating Required",
+        description: "Please select a rating before submitting.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await submitCourseRatingService(
+        auth?.user?._id,
+        studentCurrentCourseProgress?.courseDetails?._id,
+        rating
+      );
+      
+      if (response?.success) {
+        toast({
+          title: "Success",
+          description: "Rating submitted successfully!"
+        });
+        setHasRated(true);
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit rating. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     fetchCurrentCourseProgress();
@@ -234,6 +276,40 @@ function StudentViewCourseProgressPage() {
             <DialogTitle>Congratulations!</DialogTitle>
             <DialogDescription className="flex flex-col gap-3">
               <Label>You have completed the course</Label>
+              
+              {!hasRated ? (
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`h-8 w-8 cursor-pointer ${
+                          star <= rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                        }`}
+                        onClick={() => setRating(star)}
+                      />
+                    ))}
+                  </div>
+                  <Button 
+                    onClick={handleRatingSubmit}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit Rating"}
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      className={`h-8 w-8 ${
+                        star <= rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+              
               <div className="flex flex-row gap-3">
                 <Button onClick={() => navigate("/student/courses")}>
                   My Courses Page

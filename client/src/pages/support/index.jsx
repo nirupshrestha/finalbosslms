@@ -19,11 +19,11 @@ function SupportPage() {
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">Email Support</h3>
             <p className="text-gray-600 mb-4">
-              Reach us via email at <strong>support@revoc.com</strong>. We aim to respond within 24 hours.
+              Reach us via email at <strong>revocnepal@gmail.com</strong>. We aim to respond within 24 hours.
             </p>
             <button
               className="inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-              onClick={() => window.location.href = "mailto:support@revoc.com"}
+              onClick={() => window.location.href = "mailto:revocnepal@gmail.com"}
             >
               Send Email
             </button>
@@ -36,11 +36,11 @@ function SupportPage() {
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">Phone Support</h3>
             <p className="text-gray-600 mb-4">
-              For urgent assistance, you can reach us at <strong>+123-456-7890</strong>.
+              For urgent assistance, you can reach us at <strong>+9779814182323</strong>.
             </p>
             <button
               className="inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-              onClick={() => window.location.href = "tel:+1234567890"}
+              onClick={() => window.location.href = "tel:+9779814182323"}
             >
               Call Us
             </button>
@@ -48,7 +48,7 @@ function SupportPage() {
         </div>
         
         {/* Live Chat Support */}
-        <div className="flex items-start space-x-4 p-6 border rounded-lg shadow-md hover:shadow-lg transition">
+        {/* <div className="flex items-start space-x-4 p-6 border rounded-lg shadow-md hover:shadow-lg transition">
           <User className="text-blue-500 w-10 h-10" />
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">Live Chat Support</h3>
@@ -62,7 +62,7 @@ function SupportPage() {
               Start Chat
             </button>
           </div>
-        </div>
+        </div> */}
         
       </div>
 

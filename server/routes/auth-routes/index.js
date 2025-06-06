@@ -2,6 +2,7 @@ const express = require("express");
 const {
   registerUser,
   loginUser,
+  verifyEmail,
 } = require("../../controllers/auth-controller/index");
 const authenticateMiddleware = require("../../middleware/auth-middleware");
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get("/check-auth", authenticateMiddleware, (req, res) => {
     },
   });
 });
+router.get("/verify/:token", verifyEmail);
 
 module.exports = router;

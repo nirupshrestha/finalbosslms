@@ -17,7 +17,7 @@ import {
   createPaymentService,
   fetchStudentViewCourseDetailsService,
 } from "@/services";
-import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
+import { CheckCircle, Globe, Lock, PlayCircle, Star } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -176,6 +176,12 @@ function StudentViewCourseDetailsPage() {
               ? "Student"
               : "Students"}
           </span>
+          {studentViewCourseDetails?.averageRating > 0 && (
+            <span className="flex items-center">
+              <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
+              {studentViewCourseDetails?.averageRating.toFixed(1)} ({studentViewCourseDetails?.totalRatings} ratings)
+            </span>
+          )}
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-8 mt-8">
@@ -185,13 +191,13 @@ function StudentViewCourseDetailsPage() {
               <CardTitle>What you'll learn</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <ul className="grid grid-cols-1 md:grid-cols-0 gap-2">
                 {studentViewCourseDetails?.objectives
-                  ?.split(",")
+                  ?.split("\n")
                   .map((objective, index) => (
                     <li key={index} className="flex items-start">
                       <CheckCircle className="mr-2 h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span>{objective}</span>
+                      <span>{objective.trim()}</span>
                     </li>
                   ))}
               </ul>

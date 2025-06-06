@@ -162,6 +162,7 @@ import FAQPage from "./pages/faq";
 import SupportPage from "./pages/support";
 import BlogPage from "./pages/blog";
 import ProfilePage from "./pages/student/profile-page/ProfilePage";
+import VerifyEmailPage from "./pages/verifyemail";
 
 
 function App() {
@@ -222,6 +223,7 @@ function App() {
           <Route path="support" element={<SupportPage/>} />
           <Route path="blog" element={<BlogPage/>} />
           <Route path="faq" element={<FAQPage/>} />
+          <Route path="verify/:token" element={<VerifyEmailPage/>} />
           <Route
             path="edit-profile"
             element={

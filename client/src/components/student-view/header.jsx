@@ -281,6 +281,7 @@ function StudentViewCommonHeader() {
                   >
                     {isInstructor ? "My Dashboard" : "My Courses"}
                   </button>
+                  {!isInstructor &&(
                   <button
                     onClick={() => {
                       setShowDropdown(false);
@@ -290,6 +291,7 @@ function StudentViewCommonHeader() {
                   >
                     Edit Profile
                   </button>
+                  )}
                   {/* <button
                     onClick={() => {
                       setShowDropdown(false);

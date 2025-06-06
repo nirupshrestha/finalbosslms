@@ -16,6 +16,8 @@ import { InstructorContext } from "@/context/instructor-context";
 import { Delete, Edit } from "lucide-react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { deleteCourseService } from "@/services";
+
 
 function InstructorCourses({ listOfCourses }) {
   const navigate = useNavigate();
@@ -23,7 +25,38 @@ function InstructorCourses({ listOfCourses }) {
     setCurrentEditedCourseId,
     setCourseLandingFormData,
     setCourseCurriculumFormData,
+    instructorCoursesList,
+    setInstructorCoursesList,
   } = useContext(InstructorContext);
+
+    const handleDeleteCourse = async (courseId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this course? This action cannot be undone."
+    );
+    
+    if (!confirmDelete) return;
+
+    try {
+      const response = await deleteCourseService(courseId);
+      
+      if (response.success) {
+        // Update the local state to remove the deleted course
+        const updatedCourses = instructorCoursesList.filter(
+          course => course._id !== courseId
+        );
+        setInstructorCoursesList(updatedCourses);
+        
+        // Optional: Show success message
+        alert("Course deleted successfully!");
+      } else {
+        alert(response.message || "Failed to delete course");
+      }
+    } catch (error) {
+      console.error("Error deleting course:", error);
+      alert("An error occurred while deleting the course");
+    }
+  };
+
 
   return (
     <Card>
@@ -73,7 +106,12 @@ function InstructorCourses({ listOfCourses }) {
                         >
                           <Edit className="h-6 w-6" />
                         </Button>
-                        <Button variant="ghost" size="sm">
+                      <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleDeleteCourse(course._id)}
+                          className="hover:bg-red-50 hover:text-red-600"
+                        >
                           <Delete className="h-6 w-6" />
                         </Button>
                       </TableCell>

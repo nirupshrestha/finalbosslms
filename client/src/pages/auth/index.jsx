@@ -196,42 +196,44 @@ function AuthPage() {
   // }
   // naya
   async function handleRegister(event) {
-  event.preventDefault();
-
-  try {
-    const data = await handleRegisterUser(event);
-
-    if (data?.success) {
-      toast({
-        title: "Signup Successful",
-        description: "Your account has been created.",
-      });
-
-      const params = new URLSearchParams(location.search);
-      const redirect = params.get("redirect");
-      if (redirect) {
-        navigate(redirect);
+    event.preventDefault();
+  
+    try {
+      const data = await handleRegisterUser(event);
+  
+      if (data?.success) {
+        toast({
+          title: "Registration Successful",
+          description: data.message || "Please check your email and click the verification link to complete your registration.",
+        });
+        
+        // Clear the form after successful registration
+        setSignUpFormData({
+          userName: "",
+          userEmail: "",
+          password: "",
+          role: "student" // or whatever default role you use
+        });
+        
+        // Don't navigate - user needs to verify email first
       } else {
-        navigate("/");
+        toast({
+          title: "Registration Failed",
+          description: data?.message || "Something went wrong while creating your account.",
+          variant: "destructive",
+        });
       }
-    } else {
+    } catch (err) {
+      console.error(err);
+  
+      const message = err?.response?.data?.message || err.message || "Please try again.";
       toast({
-        title: "Signup Failed",
-        description: data?.message || "Something went wrong while creating your account.",
+        title: "Registration Failed",
+        description: message,
         variant: "destructive",
       });
     }
-  } catch (err) {
-    console.error(err);
-
-    const message = err?.response?.data?.message || err.message || "Please try again.";
-    toast({
-      title: "Signup Failed",
-      description: message,
-      variant: "destructive",
-    });
   }
-}
 
 
 

@@ -144,12 +144,12 @@ const FAQPage = () => {
           >
             Contact Support
           </a>
-          <a 
+          {/* <a 
             href="/help" 
             className="bg-gray-200 text-gray-800 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors"
           >
             Help Center
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

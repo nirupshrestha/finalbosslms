@@ -76,7 +76,7 @@ const getAllStudentViewCourses = async (req, res) => {
       search = "", // Add search parameter handling
     } = req.query;
     
-    console.log(req.query, "req.query");
+    //console.log(req.query, "req.query");
     
     let filters = {};
     if (category.length) {
@@ -181,8 +181,59 @@ const checkCoursePurchaseInfo = async (req, res) => {
   }
 };
 
+const rateCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { userId, rating } = req.body;
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found"
+      });
+    }
+
+    // Check if user has already rated
+    const existingRatingIndex = course.ratings.findIndex(r => r.userId === userId);
+    
+    if (existingRatingIndex > -1) {
+      // Update existing rating
+      course.ratings[existingRatingIndex].rating = rating;
+      course.ratings[existingRatingIndex].date = new Date();
+    } else {
+      // Add new rating
+      course.ratings.push({ userId, rating });
+    }
+
+    // Calculate new average rating
+    const totalRatings = course.ratings.length;
+    const sumRatings = course.ratings.reduce((sum, r) => sum + r.rating, 0);
+    course.averageRating = sumRatings / totalRatings;
+    course.totalRatings = totalRatings;
+
+    await course.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Rating submitted successfully",
+      data: {
+        averageRating: course.averageRating,
+        totalRatings: course.totalRatings
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Some error occurred!"
+    });
+  }
+};
+
 module.exports = {
   getAllStudentViewCourses,
   getStudentViewCourseDetails,
   checkCoursePurchaseInfo,
+  rateCourse
 };

@@ -146,7 +146,7 @@ export async function fetchStudentViewCourseListService(queryString) {
 
 export async function fetchStudentViewCourseDetailsService(courseId) {
   const { data } = await axiosInstance.get(
-    `/student/course/get/details/${courseId}`
+    `/student/course/details/${courseId}`
   );
 
   return data;
@@ -154,9 +154,8 @@ export async function fetchStudentViewCourseDetailsService(courseId) {
 
 export async function checkCoursePurchaseInfoService(courseId, studentId) {
   const { data } = await axiosInstance.get(
-    `/student/course/purchase-info/${courseId}/${studentId}`
+    `/student/course/check-purchase/${courseId}/${studentId}`
   );
-
   return data;
 }
 
@@ -221,13 +220,13 @@ export async function resetCourseProgressService(userId, courseId) {
   return data;
 }
 
-export const submitCourseRatingService = async (courseId, ratingData) => {
-  const { data } = await axiosInstance.post(
-    `/student/course/${courseId}/rate`,
-    ratingData
-  );
-  return data;
-};
+// export const submitCourseRatingService = async (courseId, ratingData) => {
+//   const { data } = await axiosInstance.post(
+//     `/student/course/${courseId}/rate`,
+//     ratingData
+//   );
+//   return data;
+// };
 
 export const getCourseReviewsService = async (courseId) => {
   const { data } = await axiosInstance.get(
@@ -235,3 +234,19 @@ export const getCourseReviewsService = async (courseId) => {
   );
   return data;
 };
+
+export async function deleteCourseService(courseId) {
+  const { data } = await axiosInstance.delete(`/instructor/course/delete/${courseId}`);
+  return data;
+}
+
+export async function submitCourseRatingService(userId, courseId, rating) {
+  const { data } = await axiosInstance.post(
+    `/student/courses/${courseId}/rate`,
+    {
+      userId,
+      rating
+    }
+  );
+  return data;
+}
